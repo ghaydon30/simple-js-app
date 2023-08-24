@@ -10,17 +10,15 @@ let pokemonList = [
   {name: 'Snorlax', height: 2.1, eggGroups: ['Monster', 'Thick']}
 ]
 
-/* A test to make sure the array and objects are working
-This will print the 4th pokemon's name and it's first type */
-//document.write(pokemonList[3].name+' '+pokemonList[3].types[0].name);
-
-/* For loop to print all array items of pokemonList (name and height) 
- Also printing a conditional if the height is over 2.0 meters*/
+/* 
+For loop to print out all the Pokemon names and heights
+If the height is at or over 2 meters, prints a note
+Make note that paragraph elements were used for later formatting
+*/
 for (let i = 0; i < pokemonList.length; i++) {
-  document.write(pokemonList[i].name + ' (height: ' + pokemonList[i].height + ' meters)');
   if (pokemonList[i].height >= 2.0) {
-    document.write(' - Wow, that\'s big!<br>');
+    document.write('<p>' + pokemonList[i].name + ' (height: ' + pokemonList[i].height + ' meters)' + ' - Wow, that\'s big!' + '</p>');
   } else {
-    document.write('<br>');
+    document.write('<p>' + pokemonList[i].name + ' (height: ' + pokemonList[i].height + ' meters)' + '</p>');
   }
 }
