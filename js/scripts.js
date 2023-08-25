@@ -13,7 +13,12 @@ let pokemonRepository = (function () {
 
   // Local function that adds a pokemon object to the array variable pokemonList
   function add(pokemon) {
-    pokemonList.push(pokemon);
+    if ((typeof pokemon === 'object') && (Object.keys(pokemon)[0] === 'name') && (Object.keys(pokemon)[1] === 'height') && (Object.keys(pokemon)[2] === 'eggGroups')) {
+      pokemonList.push(pokemon);
+    } else {
+      // document.write('<p>' + 'Only a pokemon object can be added to this Pokemon List' + '</p>');
+      alert('ALERT: Only a pokemon object can be added to the Pokemon List, there is currently an attempt to add an incorrect type to this list.');
+    }
   }
 
   // Local function that returns the pokemonList array variable
