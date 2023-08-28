@@ -26,25 +26,50 @@ let pokemonRepository = (function () {
     return pokemonList;
   }
 
+  function addListItem(pokemon) {
+    /* Creates a variable pokePageList (node) that is assigned to the <ul></ul> tag 
+    in our index.HTML file with class name .pokemon-list */
+    let pokePageList = document.querySelector('.pokemon-list');
+    
+    // Creates a list item variable (node) for our <li></li> tag in index.HTML
+    let listItem = document.createElement('li');
+
+    // Creates a button variable (node) for our <button></button> tag in index.HTML
+    let button = document.createElement('button');
+    // Sets the button text to the pokemon's name
+    button.innerText = pokemon.name;
+    // Adds the class list-button to button for CSS styling access
+    button.classList.add('list-button');
+
+    // Add event listener for when the user clicks on a pokelist button
+    // Calls the showDetails function as it's event handler getting passed the pokemon object
+    button.addEventListener('click', pokemonRepository.showDetails(pokemon));
+
+    /* Append the button node to listItem, and listItem to pokePageList both 
+    as their children */
+    listItem.appendChild(button);
+    pokePageList.appendChild(listItem)
+  }
+
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  }
+
   // Return statement, allowing you to call add and getAll local functions
   // This allows global access to pokemonList that is otherwise impossible
   return {
     add: add,
-    getAll: getAll
+    getAll: getAll,
+    addListItem: addListItem,
+    showDetails: showDetails
   };
 })();
 
 // pokemonRepository.getAll() calls getAll function in IIFE to copy pokemonList onto pokemonRepository
-// .forEach iterates through pokemonRepository and executes printPokemon function for each index
+// .forEach iterates through pokemonRepository and executes .addListItem function for each index
 // Function printPokemon passed parameter pokemon, which is an object at each index of pokemonRepository
-// printPokemon function then evaluates each object and prints keys name and height, along with a message
 pokemonRepository.getAll().forEach(function printPokemon(pokemon) {
-  // Checks if pokemon height is over 2 meters
-  if (pokemon.height >= 2.0) {
-    // Writes to document as a paragraph element the name, height, and a message about the pokemon object
-    document.write('<p>' + pokemon.name + ' (height: ' + pokemon.height + ' meters)' + ' - Wow, that\'s big!' + '</p>');
-  } else {
-    // Writes to document as a paragraph element the name and height of the pokemon object
-    document.write('<p>' + pokemon.name + ' (height: ' + pokemon.height + ' meters)' + '</p>');
-  }
+  // Calls function addListItem with parameter pokemon
+  // This calls for the addition of a button list item to ul pokemon list
+  pokemonRepository.addListItem(pokemon);
 });
