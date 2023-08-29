@@ -43,7 +43,9 @@ let pokemonRepository = (function () {
 
     // Add event listener for when the user clicks on a pokelist button
     // Calls the showDetails function as it's event handler getting passed the pokemon object
-    button.addEventListener('click', pokemonRepository.showDetails(pokemon));
+    button.addEventListener('click', function() {
+      showDetails(pokemon);
+    });
 
     /* Append the button node to listItem, and listItem to pokePageList both 
     as their children */
