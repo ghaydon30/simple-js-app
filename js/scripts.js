@@ -3,13 +3,7 @@
 // funtions add and getAll will be in return to allow intentional access
 let pokemonRepository = (function () {
   // Create a pokemonList array variable, housed in an IIFE to keep it unaccessable
-  let pokemonList = [
-    {name: 'Charizard', height: 1.7, eggGroups: ['Monster', 'Dragon']},
-    {name: 'Blastoise', height: 1.6, eggGroups: ['Monster', 'Water 1']},
-    {name: 'Machamp', height: 1.6, eggGroups: ['Human-Like', 'Guts']},
-    {name: 'Jigglypuff', height: 0.5, eggGroups: ['Fairy', 'Friend']},
-    {name: 'Snorlax', height: 2.1, eggGroups: ['Monster', 'Thick']}
-  ];
+  let pokemonList = [];
 
   // Local function that adds a pokemon object to the array variable pokemonList
   function add(pokemon) {
