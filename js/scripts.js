@@ -74,8 +74,7 @@ FUNCTIONALITY OVERVIEW
   7: showDetails() function passed parameter pokemon, prompts calling promise 
   loadDetails for pokemon
 
-    7a: If loadDetails promise resolves, callback function logs pokemon object to
-    the console now with all included details (see 8:)
+    7a: If loadDetails promise resolves, callback function calls hideModal (see 9)
 
   8: LoadDetails takes an item as a parameter (which is pokemon from showDetails)
 
@@ -91,6 +90,32 @@ FUNCTIONALITY OVERVIEW
     API object keys from details object, item passed to showDetails now with info
 
     8f: Catch with error function in case promise does not achieve valid response
+
+  9: Function showModal to display a modal of the pokemon information
+
+    9a: Selects the modal container as DOM element
+
+    9b: Clears existing modal content
+
+    9c: Creates a div element with class modal for the modal itself
+
+    9d: Add modal content by creating element, adding relevant classes, and info
+
+    9e: Append modal DOM elements to modal element as children
+
+    9f: Append modal to modal container as child
+
+    9g: Make modal visible after adding contents by adding is-visible class
+
+    9h: Event listener for clicking outside of container needs to be inside 
+    showModal because this defines the box
+
+  10: Functionality to close modal when escape key is pressed
+
+    10a: Checks if the event's key is 'Escape' and if modal container 
+    is currently visible
+
+  11: Need explanation on this
 
 */
 
@@ -178,7 +203,7 @@ let pokemonRepository = (function () {
     // 6c:
     let button = document.createElement('button');
     // 6d: 
-    button.innerText = pokemon.name;
+    button.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
     // 6e: 
     button.classList.add('list-button');
     // 6f: 
@@ -191,11 +216,86 @@ let pokemonRepository = (function () {
     });
   }
 
+  // 9:
+  function showModal(item) {
+    // 9a:
+    let modalContainer = document.querySelector('#modal-container');
+    // 9b:
+    modalContainer.innerHTML = '';
+    // 9c: 
+    let modal = document.createElement('div');
+    modal.classList.add('modal');
+
+    // 9d: 
+    let closeButtonElement = document.createElement('button');
+    closeButtonElement.classList.add('modal-close');
+    closeButtonElement.innerText = 'X';
+    closeButtonElement.addEventListener('click', hideModal);
+
+    let titleElement = document.createElement('h1');
+    let titleBase = item.name;
+    let titleCap = titleBase.charAt(0).toUpperCase();
+    let titleRest = titleBase.slice(1);
+    titleElement.innerText = titleCap + titleRest;
+
+    let contentElement = document.createElement('p');
+    contentElement.innerText = 'Height: ' + item.height;
+
+    let imgCase = document.createElement('div');
+    imgCase.classList.add('modal-img');
+    let imgElement = document.createElement('img');
+    imgElement.src = item.imageUrl;
+    imgElement.width = '300';
+    imgCase.appendChild(imgElement)
+
+    // 9e: 
+    modal.appendChild(closeButtonElement);
+    modal.appendChild(titleElement);
+    modal.appendChild(contentElement);
+    modal.appendChild(imgCase);
+    // 9f: 
+    modalContainer.appendChild(modal);
+
+    // 9g: 
+    modalContainer.classList.add('is-visible');
+
+    // 9h: 
+    modalContainer.addEventListener('click', (e) => {
+        let target = e.target;
+        if (target === modalContainer) {
+            hideModal();
+        }
+    })
+  }
+
+  // 10:
+  window.addEventListener('keydown', (e) => {
+    let modalContainer = document.querySelector('#modal-container');
+    // 10a: 
+    if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+        hideModal();
+    }
+  })
+
+  // 11: Need explanation on this
+  let dialogPromiseReject;
+
+  function hideModal() {
+      let modalContainer = document.querySelector('#modal-container');
+      modalContainer.classList.remove('is-visible');
+
+      if (dialogPromiseReject) {
+          dialogPromiseReject();
+          dialogPromiseReject = null;
+      }
+  }
+  
   // 7: 
   function showDetails(pokemon) {
     // 7a: 
     loadDetails(pokemon).then(function () {
-      console.log(pokemon);
+      // console.log(pokemon);
+      showModal(pokemon);
     });
   }
 
@@ -226,4 +326,6 @@ QUESTIONS
   1: What is the purpose of the newly defined function in the forEach that calls
   addListItem? Why can I not just add pokemonRepository.addListItem(pokemon)
   into the forEach loop?
+
+  2: How does part 11 actually work and why is it needed?
 */
