@@ -1,64 +1,162 @@
-// Create a repository variable to copy the pokemonList array (housed in an IIFE)
-// Holding array in an IIFE protects it from unintended side effects
-// funtions add and getAll will be in return to allow intentional access
+/* 
+FUNCTIONALITY OVERVIEW
+  1: pokemonRepository is an IIFE which houses global variables and protects
+  them from unwanted consequences 
+
+    1a: Create a pokemonList array variable, housed in an IIFE to keep it unaccessible
+
+    1b: Create a apiUrl variable to house the URL of the general pokemon API
+
+    1c: return statement returns all included functions, allowing access to IIFE
+
+  2: pokemonRepository.loadList becomes a promise due to .then following
+  loadList() is used to fetch data from the API, then add each Pokémon in 
+  the fetched data to pokemonList with the add function
+
+    2a: .getAll() function returns pokemonList (essentially copying to repo)
+
+    2b: .forEach iterates through pokemonRepository applying printPokemon with 
+    parameter pokemon
+
+    2c: printPokemon then calls .addListItem (see 6) with parameter pokemon 
+    which adds each pokemon as a button to the page
+
+  3: loadList() uses two promises to 
+
+    3a: returns fetch getting all data from the pokeAPI URL (promise response), 
+    .then gets passed the promise response, which on fulfilled calls a function 
+    with parameter "response"
+
+    3b: return of 3a function is response.json() converting all fetched response
+    information into json format
+
+    3c: Following 3b, second .then implies json data is passed as promise response
+    Dot notation is used to access the "results" key in the API (holds pokemon name & URL)
+    forEach now called to iterate through results passed each result as item
+
+    3d: Create pokemon object with name and detailsURL loaded with item. notation
+
+    3e: Calls add() passing newly created pokemon object (see 4)
+
+    3f: catch in case any of the promises previously are not fulfilled
+  
+  4: Function that checks pokemon object keys & adds pokemon 
+  to the array pokemonList
+
+    4a: If statement to check if parameter passed to add() is a proper pokemon
+    Checks if pokemon is an object, and if the two keys are correct strings 
+
+    4b: pokemon.push appends the vetted pokemon object to array pokemonList
+
+  5: getAll() is a local function that returns the pokemonList array variable, 
+  thus copying it to pokemonRepository
+
+  6: addListItem is passed parameter pokemon with purpose to add a button with
+  the pokemon name, used to list all pokemon when called by forEach loop
+
+    6a: Create pokePageList node with query selector for pokemon-list class in HTML
+
+    6b: Create element node for a list item in pokemon-list
+
+    6c: Create a button element for the document
+
+    6d: Set button innerText to the pokemon's name with "name" key
+
+    6e: Add class list-button to the newly created button
+
+    6f: Add new button element to listChild and listItem to pokePageList with 
+    appendChild (note that this is used with DOM elements)
+    
+    6g: Add an event listener for when the user clicks on the button, which will
+    prompt call of showDetails as event handler and pass parameter "pokemon" object, 
+    goal to show pokemon details in console upon click
+
+  7: showDetails() function passed parameter pokemon, prompts calling promise 
+  loadDetails for pokemon
+
+    7a: If loadDetails promise resolves, callback function logs pokemon object to
+    the console now with all included details (see 8:)
+
+  8: LoadDetails takes an item as a parameter (which is pokemon from showDetails)
+
+    8a: create url variable for details api using the detailsUrl key in the object
+
+    8b: Fetch and return the data from the url, then pass it as "response"
+
+    8c: Next return response.json, converting JSON response into object
+
+    8d: use .then to pass object as details
+
+    8e: Add to item object keys for imageUrl, height, and types referring to 
+    API object keys from details object, item passed to showDetails now with info
+
+    8f: Catch with error function in case promise does not achieve valid response
+
+*/
+
+
+// 1:
 let pokemonRepository = (function () {
   
-  // Create a pokemonList array variable, housed in an IIFE to keep it unaccessable
+  // 1a:
   let pokemonList = [];
   
-  //Variable set as the API url we will use for all the pokemon information
+  // 1b:
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-  /* Function loadList returns fetch for the previously declared
-  variable apiURL */ 
+  // 3:
   function loadList() {
-    // apiUrl passed into fetch, calls .then method which implies a promise
-    // The result of the promise is the promise, a function passed response
+    // 3a:
     return fetch(apiUrl).then(function (response) {
-      // response.json() converts the response to a json (all data in the URL)
+      // 3b:
       return response.json();
     }).then(function (json) {
-      // json now represents all the data in the API
-      // json.results refers to the "results" in the API itself
-      // results in this case is the key, hence dot notation
-      /* forEach function says for each item (which is each pokemon) 
-      we create a variable pokemon which is mapped to an object, kets name and detailsURL
-      the .name and .url come as keys from the items in the api */
+      // 3c:
       json.results.forEach(function (item) {
+        // 3d:
         let pokemon = {
           name: item.name,
           detailsUrl: item.url
         };
+        // 3e:
         add(pokemon);
       });
+    // 3f: 
     }).catch(function (e) {
       console.error(e);
     })
   }
 
+  // 8: 
   function loadDetails(item) {
+    // 8a: 
     let url = item.detailsUrl;
+    // 8b:
     return fetch(url).then(function (response) {
+      // 8c:
       return response.json();
+      // 8d:
     }).then(function (details) {
+      // 8e: 
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
       item.types = details.types;
+      // 8f:
     }).catch(function (e) {
       console.error(e);
     });
   }
   
-  // Local function that adds a pokemon object to the array variable pokemonList
+  // 4: 
   function add(pokemon) {
-    // Checks if the pokemon parameter is an object, and if it has keys name and url
-    // Keys come from objects in pokemonRepository
-    // in is an operator that returns true if a specific property is in the specified object
+    
+    // 4a:
     if (
       typeof pokemon === 'object' && 
       'name' in pokemon && 
       'detailsUrl' in pokemon
       ) {
+        // 4b: 
         pokemonList.push(pokemon);
     } else {
       document.write('<p>' + 'Only a pokemon object can be added to this Pokemon List' + '</p>');
@@ -66,46 +164,42 @@ let pokemonRepository = (function () {
     }
   }
 
-  // Local function that returns the pokemonList array variable
+  // 5:
   function getAll() {
     return pokemonList;
   }
 
+  // 6:
   function addListItem(pokemon) {
-    /* Creates a variable pokePageList (node) that is assigned to the <ul></ul> tag 
-    in our index.HTML file with class name .pokemon-list */
+    // 6a:
     let pokePageList = document.querySelector('.pokemon-list');
-    
-    // Creates a list item variable (node) for our <li></li> tag in index.HTML
+    // 6b:
     let listItem = document.createElement('li');
-
-    // Creates a button variable (node) for our <button></button> tag in index.HTML
+    // 6c:
     let button = document.createElement('button');
-    // Sets the button text to the pokemon's name
+    // 6d: 
     button.innerText = pokemon.name;
-    // Adds the class list-button to button for CSS styling access
+    // 6e: 
     button.classList.add('list-button');
+    // 6f: 
+    listItem.appendChild(button);
+    pokePageList.appendChild(listItem)
 
-    // Add event listener for when the user clicks on a pokelist button
-    // Calls the showDetails function as it's event handler getting passed the pokemon object
+    // 6g:
     button.addEventListener('click', function() {
       showDetails(pokemon);
     });
-
-    /* Append the button node to listItem, and listItem to pokePageList both 
-    as their children */
-    listItem.appendChild(button);
-    pokePageList.appendChild(listItem)
   }
 
+  // 7: 
   function showDetails(pokemon) {
+    // 7a: 
     loadDetails(pokemon).then(function () {
       console.log(pokemon);
     });
   }
 
-  // Return statement, allowing you to call add and getAll local functions
-  // This allows global access to pokemonList that is otherwise impossible
+  // 1c:
   return {
     add: add,
     getAll: getAll,
@@ -116,13 +210,20 @@ let pokemonRepository = (function () {
   };
 })();
 
+// 2:
 pokemonRepository.loadList().then(function() {
-  // pokemonRepository.getAll() calls getAll function in IIFE to copy pokemonList onto pokemonRepository
-  // .forEach iterates through pokemonRepository and executes .addListItem function for each index
-  // Function printPokemon passed parameter pokemon, which is an object at each index of pokemonRepository
+  // 2a:
+  // 2b:
   pokemonRepository.getAll().forEach(function printPokemon(pokemon) {
-    // Calls function addListItem with parameter pokemon
-    // This calls for the addition of a button list item to ul pokemon list
+    // 2c:
     pokemonRepository.addListItem(pokemon);
   });
 });
+
+/* 
+QUESTIONS
+
+  1: What is the purpose of the newly defined function in the forEach that calls
+  addListItem? Why can I not just add pokemonRepository.addListItem(pokemon)
+  into the forEach loop?
+*/
