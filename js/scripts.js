@@ -238,8 +238,11 @@ let pokemonRepository = (function () {
     let titleRest = titleBase.slice(1);
     titleElement.innerText = titleCap + titleRest;
 
-    let contentElement = document.createElement('p');
-    contentElement.innerText = 'Height: ' + item.height;
+    let heightElement = document.createElement('p');
+    heightElement.innerText = 'Height: ' + item.height;
+
+    let typesElement = document.createElement('p');
+    typesElement.innerText = JSON.stringify(item.types);
 
     let imgCase = document.createElement('div');
     imgCase.classList.add('modal-img');
@@ -251,7 +254,8 @@ let pokemonRepository = (function () {
     // 9e: 
     modal.appendChild(closeButtonElement);
     modal.appendChild(titleElement);
-    modal.appendChild(contentElement);
+    modal.appendChild(heightElement);
+    modal.appendChild(typesElement);
     modal.appendChild(imgCase);
     // 9f: 
     modalContainer.appendChild(modal);
