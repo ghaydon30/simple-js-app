@@ -242,7 +242,9 @@ let pokemonRepository = (function () {
     heightElement.innerText = 'Height: ' + item.height;
 
     let typesElement = document.createElement('p');
-    typesElement.innerText = JSON.stringify(item.types);
+    let typesString = item.types.map(type => type.type.name);
+    typesString = typesString.join(', ');
+    typesElement.innerText = 'Types: ' + typesString;
 
     let imgCase = document.createElement('div');
     imgCase.classList.add('modal-img');
