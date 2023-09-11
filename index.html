@@ -1,21 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-</head>
-<body>
-    <main class="pokedex">
-        <h1 class="title">Pokedex</h1>
-        <ul class="pokemon-list"></ul>
+    <!-- Link to Bootstrap, place this before custom styling, as 
+    it provides a default that you can then overwrite if you wish -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+  </head>
+  <body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="/img/pokeball_image.jpeg" width="30" height="30" class="d-inline-block align-top" alt="">
+                Pokedex
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Placeholder 1</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Placeholder 2</a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+    </header>
 
-        <!-- Does not need to have modals enclosed, used to turn off / on  -->
-        <div id="modal-container"></div>
+    <main class="pokedex">
+      <h1 class="title">Pokemon List</h1>
+      <ul class="list-group"></ul>
+
+      <!-- Does not need to have modals enclosed, used to turn off / on  -->
+      <div class="modal fade" id="pokeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">Modal Title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                PLACEHOLDER
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
     </main>
-    
+
+    <footer></footer>
+
     <!-- Embeds a client side script (js), in this case our promise polyfill -->
     <!-- Polyfill allows for support on browsers with no promise support -->
     <script src="js/promise-polyfill.js"></script>
@@ -23,9 +74,26 @@
     <!-- Embeds a client side script (js), in this case our fetch polyfill -->
     <!-- Polyfill allows for support on browsers with no promise support -->
     <script src="js/fetch-polyfill.js"></script>
-    
+
+    <!-- Scripts to add Jquery and Bootstrap, note that JQuery must be added first -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
     <!-- Includes our javascript page into our HTML page, 
     note that this should be included at the bottom of the HTML -->
     <script src="js/scripts.js"></script>
-</body>
+  </body>
 </html>
