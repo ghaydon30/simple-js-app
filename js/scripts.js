@@ -56,18 +56,16 @@ FUNCTIONALITY OVERVIEW
 
     6a: Create pokePageList node with query selector for pokemon-list class in HTML
 
-    6b: Create element node for a list item in pokemon-list
+    6b: Create a button element for the document
 
-    6c: Create a button element for the document
+    6c: Set button innerText to the pokemon's name with "name" key
 
-    6d: Set button innerText to the pokemon's name with "name" key
+    6d: Add necessary classes and types for button to call the Bootstrap Modal
 
-    6e: Add class list-button to the newly created button
-
-    6f: Add new button element to listChild and listItem to pokePageList with 
-    appendChild (note that this is used with DOM elements)
+    6e: Add new button element to pokePageList with appendChild 
+    (note that this is used with DOM elements)
     
-    6g: Add an event listener for when the user clicks on the button, which will
+    6f: Add an event listener for when the user clicks on the button, which will
     prompt call of showDetails as event handler and pass parameter "pokemon" object, 
     goal to show pokemon details in console upon click
 
@@ -93,22 +91,13 @@ FUNCTIONALITY OVERVIEW
 
   9: Function showModal to display a modal of the pokemon information
 
-    9a: Selects the modal container as DOM element
+    9a: Uses JQuery to create select body and title of HTML modal element
+    clears both of these from the previous modal avoiding duplicates
 
-    9b: Clears existing modal content
+    9b: Create contents for modal title, image, height, and types elements
 
-    9c: Creates a div element with class modal for the modal itself
-
-    9d: Add modal content by creating element, adding relevant classes, and info
-
-    9e: Append modal DOM elements to modal element as children
-
-    9f: Append modal to modal container as child
-
-    9g: Make modal visible after adding contents by adding is-visible class
-
-    9h: Event listener for clicking outside of container needs to be inside 
-    showModal because this defines the box
+    9c: Add all previous elements to the modal with .append 
+    (note Bootstrap modal is used)
 
   10: Functionality to close modal when escape key is pressed
 
@@ -199,22 +188,18 @@ let pokemonRepository = (function () {
     // 6a:
     let pokePageList = document.querySelector('.list-group');
     // 6b:
-    // // let listItem = document.createElement('li');
-    // // listItem.classList.add('list-group-item');
-    // 6c:
     let button = document.createElement('button');
-    // 6d: 
+    // 6c: 
     button.innerText = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
-    // 6e: 
+    // 6d: 
     button.classList.add('btn', 'btn-primary', 'btn-block', 'btn-lg');
     button.setAttribute('type', 'button');
     button.setAttribute('data-toggle', 'modal');
     button.setAttribute('data-target', '#pokeModal');
-    // 6f: 
-    // // listItem.appendChild(button);
+    // 6e: 
     pokePageList.appendChild(button);
 
-    // 6g:
+    // 6f:
     button.addEventListener('click', function() {
       showDetails(pokemon);
     });
@@ -223,18 +208,19 @@ let pokemonRepository = (function () {
   // 9:
   function showModal(item) {
 
+    // 9a:
     let modalBody = $('.modal-body');
     let modalTitle = $('.modal-title');
 
     modalTitle.empty();
     modalBody.empty();
 
+    // 9b: 
     let titleBase = item.name;
     let titleCap = titleBase.charAt(0).toUpperCase();
     let titleRest = titleBase.slice(1);
     let titleElement = $('<h1>' + titleCap + titleRest + '</h1>');
-    // console.log(titleElement);
-    let imgElement = $('<img class="modal-img" style="width:50%">');
+    let imgElement = $('<img style="width:50%">');
     imgElement.attr('src', item.imageUrl);
 
     let heightElement = $('<p>' + 'Height: ' + item.height + '</p>');
@@ -243,6 +229,7 @@ let pokemonRepository = (function () {
     typesString = typesString.join(', ');
     let typesElement = $('<p>' + 'Types: ' + typesString + '</p>');
 
+    // 9c: 
     modalTitle.append(titleElement);
     modalBody.append(imgElement);
     modalBody.append(heightElement);

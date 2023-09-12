@@ -12,13 +12,13 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="dist/mini-styles.css" />
   </head>
   <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
             <a class="navbar-brand" href="#">
-                <img src="/img/pokeball_image.jpeg" width="30" height="30" class="d-inline-block align-top" alt="">
+                <img src="img/pokeball_image.jpeg" width="30" height="30" class="d-inline-block align-top" alt="">
                 Pokedex
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -69,11 +69,11 @@
 
     <!-- Embeds a client side script (js), in this case our promise polyfill -->
     <!-- Polyfill allows for support on browsers with no promise support -->
-    <script src="js/promise-polyfill.js"></script>
+    <script src="dist/mini-promise.js"></script>
 
     <!-- Embeds a client side script (js), in this case our fetch polyfill -->
     <!-- Polyfill allows for support on browsers with no promise support -->
-    <script src="js/fetch-polyfill.js"></script>
+    <script src="dist/mini-fetch.js"></script>
 
     <!-- Scripts to add Jquery and Bootstrap, note that JQuery must be added first -->
     <script
@@ -94,6 +94,6 @@
 
     <!-- Includes our javascript page into our HTML page, 
     note that this should be included at the bottom of the HTML -->
-    <script src="js/scripts.js"></script>
+    <script src="dist/mini-scripts.js"></script>
   </body>
 </html>
