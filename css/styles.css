@@ -1,53 +1,23 @@
 /* ADDING VARIABLES IN :ROOT PSEUDO CLASS */
 :root {
     /* General Variables */
-    --background-color: #ffffff;
-    --primary-color: #0B0B45;
     --secondary-color: #2b2b2b;
-    --text-color: #000000;
-    --grid-color: #ffffff;
     --reg-font-weight: 400;
     --bold-font-weight: 700;
     --body-font-size: 16px;
-    --line-height: 1.6;
-    --general-padding: 20px;
-    --general-margin: 10px;
-    --general-grid-gap: 20px;
-    --general-opacity: 0.6;
-    --outline-width: 2px;
-    --border-width: 2px;
  
     /* Heading Variables */
     --h1__size: 30px;
     --h2__size: 24px;
     --h3__size: 18px;
- 
-    /* Button Variables */
-    --button-padding: 10px;
-    --button-text-color: black;
-    --button-background__color: lightgray;
-    /* --visited-button-color: purple;
-    --active-button-color: lightblue;
-    --focus-button-color: red;
-    --active-button-color: green; */
 } 
 
 * {
     box-sizing: border-box;
 }
 
-body {
-    background-color: var(--background-color);
-    font-family: 'Roboto Condensed', sans-serif;
-    font-weight: var(--reg-font-weight);
-    font-style: normal;
-    font-size: var(--body-font-size);
-    line-height: var(--line-height);
-    color: var(--text-color);
-}
-
 .pokedex {
-    max-width: 500px;
+    max-width: 300px;
     margin: 0 auto;
     text-align: center;
 }
@@ -68,94 +38,3 @@ h3 {
 a {
     color: var(--primary-color);
 }
-
-/* REMOVE */
-.pokemon-list {
-    /* Removes bullet points from the list (formatted as buttons) */
-    list-style-type: none;
-    /* Removes Unordered list padding default  so general styling
-    can be applied */
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* BUTTON PROPERTIES REMOVE*/
-.list-button {
-    /* overwrites browser default and resets the border */
-    border: none;
-    display: inline-block;
-    /* takes the font from the outer container */
-    /* font-family: inherit; */
-    width: 50%;
-    min-width: 300px;
-    margin-top: var(--general-margin);
-    background-color: var(--button-background__color);
-    color: var(--button-text-color);
-    text-decoration: none;
-    text-align: left;
-    font-size: var(--body-font-size);
-    padding: var(--button-padding);
-    border-radius: 3px;
-    border-bottom: var(--border-width) solid rgba(0, 0, 0, 0.3);
-    transition: opacity, 0.5s;
-}
-
-/* Modal container defaults modal to being hidden */
-#modal-container {
-    display: none;
-}
-
-/* Modal container executed when class .is-visible */
-#modal-container.is-visible {
-    position: fixed;
-    padding: 20px;
-    box-sizing: border-box;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-
-    /* to show it above other content */
-    z-index: 999; 
-
-    /* to allow scrolling if the screen is not high enough*/
-    overflow: auto; 
-
-    /* this is used to center the modal */
-    display: grid;
-    text-align: center;
-}
-  
-/* .modal {
-    margin: auto;
-    display: inline-block;
-    box-sizing: border-box;
-    background: #fff;
-    padding: 15px;
-    width: 100%;
-    max-width: 500px;
-    text-align: left;
-} */
-  
-.modal-close {
-    float: right;
-    border: 0;
-    background: none;
-    color: #777;
-    font-size: 18px;
-}
-  
-.modal-img {
-    text-align: center;
-    /* margin: 0 auto; */
-}
-
-.modal h1 {
-    /* text-align: center; */
-    margin-top: 0;
-}
-  
-.modal p {
-    margin-bottom: 0;
-} 
